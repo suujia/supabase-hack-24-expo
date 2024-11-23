@@ -34,7 +34,7 @@ export default function Index() {
       </View>
 
       <WebView 
-        source={{ uri: 'https://superhack.onrender.com' }}
+        source={{ uri: 'https://superhack.onrender.com/' }}
         style={{ flex: 1 }}
         onError={(syntheticEvent) => {
           const { nativeEvent } = syntheticEvent;
@@ -43,6 +43,24 @@ export default function Index() {
         onLoadEnd={() => console.log('WebView loaded')}
         javaScriptEnabled={true}
         domStorageEnabled={true}
+        injectedJavaScript={`
+          // Set volume to maximum for all audio and video elements
+          document.querySelectorAll('audio, video').forEach(element => {
+            element.volume = 1.0;
+          });
+          // For any dynamically added audio/video elements
+          const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+              mutation.addedNodes.forEach((node) => {
+                if (node.tagName === 'AUDIO' || node.tagName === 'VIDEO') {
+                  node.volume = 1.0;
+                }
+              });
+            });
+          });
+          observer.observe(document.body, { childList: true, subtree: true });
+          true;
+        `}
       />
 
       {/* Main Content */}
