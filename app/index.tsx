@@ -1,8 +1,30 @@
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity, Alert } from "react-native";
 import { Link } from "expo-router";
 import { FontAwesome } from '@expo/vector-icons';
+import WebView from 'react-native-webview';
+import { useEffect } from 'react';
+import { Audio } from 'expo-av';
 
 export default function Index() {
+  useEffect(() => {
+    const requestMicrophonePermission = async () => {
+      try {
+        const { status } = await Audio.requestPermissionsAsync();
+        if (status !== 'granted') {
+          Alert.alert(
+            'Permission Required',
+            'Microphone access is required for this feature to work properly.',
+            [{ text: 'OK' }]
+          );
+        }
+      } catch (error) {
+        console.error('Error requesting microphone permission:', error);
+      }
+    };
+
+    requestMicrophonePermission();
+  }, []);
+
   return (
     <View className="flex-1 bg-white">
       {/* Header */}
@@ -11,10 +33,15 @@ export default function Index() {
         <Text className="text-blue-100 mt-2">Your personal AI companion</Text>
       </View>
 
+      <WebView 
+        source={{ uri: 'https://www.google.com' }}
+        style={{ flex: 1 }}
+      />
+
       {/* Main Content */}
       <View className="flex-1 px-6 py-8">
         {/* Voice Assistant Button */}
-        <TouchableOpacity 
+        {/* <TouchableOpacity 
           className="items-center justify-center bg-blue-500 rounded-full w-32 h-32 mx-auto mb-8 active:bg-blue-600"
           onPress={() => {
             console.log('Voice assistant pressed');
@@ -22,7 +49,7 @@ export default function Index() {
         >
           <FontAwesome name="microphone" size={48} color="white" />
         </TouchableOpacity>
-        
+         */}
         {/* Quick Actions */}
         <View className="space-y-4">
           <Link href="/events" asChild>
