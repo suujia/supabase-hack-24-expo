@@ -29,21 +29,21 @@ export default function RootLayout() {
           }}
         />
         <Stack.Screen 
-          name="events"
-          options={{
-            title: 'Events'
-          }}
-        />
-        <Stack.Screen 
           name="news"
           options={{
-            title: 'News Feed'
+            headerShown: false,
           }}
         />
         <Stack.Screen 
           name="history"
           options={{
-            title: 'History'
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen 
+          name="events"
+          options={{
+            headerShown: false,
           }}
         />
       </Stack>

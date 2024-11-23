@@ -77,24 +77,32 @@ export default function History() {
           </TouchableOpacity>
         </ScrollView>
 
-        {/* History List */}
-        <ScrollView className="flex-1 px-6">
+        <ScrollView className="px-6">
           {historyItems.map((item) => (
-            <TouchableOpacity
-              key={item.id}
-              className="bg-[#2C2C2C] mb-4 p-4 rounded-xl border border-gray-700"
+            <View 
+              key={item.id} 
+              className="bg-[#2C2C2C] p-6 mb-4 rounded-2xl border border-gray-800"
             >
-              <View className="flex-row items-center">
-                <View className="bg-[#3C3C3C] p-3 rounded-lg">
-                  <FontAwesome name={getIconName(item.type)} size={20} color="#E5E5E5" />
+              <View className="flex-row items-center justify-between mb-3">
+                <View className="flex-row items-center">
+                  <View className="w-10 h-10 bg-[#3A3A3A] rounded-full items-center justify-center mr-3">
+                    <FontAwesome name={getIconName(item.type)} size={20} color="#E5E5E5" />
+                  </View>
+                  <Text className="text-gray-400 text-sm">{item.time}</Text>
                 </View>
-                <View className="ml-4 flex-1">
-                  <Text className="text-white font-semibold">{item.query}</Text>
-                  <Text className="text-gray-400 mt-1">{item.response}</Text>
-                  <Text className="text-gray-500 text-sm mt-2">{item.time}</Text>
-                </View>
+                <TouchableOpacity>
+                  <FontAwesome name="ellipsis-h" size={18} color="#666" />
+                </TouchableOpacity>
               </View>
-            </TouchableOpacity>
+              
+              <View className="bg-[#1A1A1A] p-4 rounded-xl mb-3">
+                <Text className="text-white text-base">{item.query}</Text>
+              </View>
+              
+              <View className="bg-[#3A3A3A] p-4 rounded-xl">
+                <Text className="text-gray-300">{item.response}</Text>
+              </View>
+            </View>
           ))}
         </ScrollView>
 

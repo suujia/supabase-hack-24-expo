@@ -8,27 +8,35 @@ export default function PremiumEvents() {
   const [events] = useState([
     {
       id: 1,
-      title: "Strategy Meeting",
-      time: "10:00 AM",
-      date: "Today",
-      location: "Conference Room A",
-      type: "Meeting"
+      title: "SF AI Summit 2024",
+      time: "9:00 AM",
+      date: "Nov 23, 2024",
+      location: "Moscone Center, SF",
+      type: "Conference"
     },
     {
       id: 2,
-      title: "Project Review",
-      time: "2:30 PM",
-      date: "Today",
-      location: "Virtual",
-      type: "Call"
+      title: "HealthTech Innovation Forum",
+      time: "2:00 PM",
+      date: "Nov 23, 2024",
+      location: "UCSF Mission Bay",
+      type: "Forum"
     },
     {
       id: 3,
-      title: "Team Lunch",
-      time: "12:00 PM",
-      date: "Tomorrow",
-      location: "Bistro Garden",
-      type: "Social"
+      title: "AI in Healthcare Meetup",
+      time: "6:30 PM",
+      date: "Nov 24, 2024",
+      location: "SoMa, SF",
+      type: "Meetup"
+    },
+    {
+      id: 4,
+      title: "Bay Area Tech Career Fair",
+      time: "11:00 AM",
+      date: "Nov 25, 2024",
+      location: "Palace Hotel, SF",
+      type: "Career Fair"
     }
   ]);
 
@@ -67,28 +75,37 @@ export default function PremiumEvents() {
           </TouchableOpacity>
         </ScrollView>
 
-        {/* Events List */}
-        <ScrollView className="flex-1 px-6">
+       
+        <ScrollView className="px-6">
           {events.map((event) => (
-            <TouchableOpacity
-              key={event.id}
-              className="bg-[#2C2C2C] mb-4 p-4 rounded-xl border border-gray-700"
+            <View 
+              key={event.id} 
+              className="bg-[#2C2C2C] p-6 mb-4 rounded-2xl border border-gray-800"
             >
-              <View className="flex-row items-center">
-                <View className="bg-[#3C3C3C] p-3 rounded-lg">
-                  <FontAwesome 
-                    name={event.type === "Meeting" ? "users" : event.type === "Call" ? "phone" : "cutlery"} 
-                    size={20} 
-                    color="#E5E5E5" 
-                  />
+              <View className="flex-row items-center justify-between mb-3">
+                <View className="flex-row items-center">
+                  <View className="w-10 h-10 bg-[#3A3A3A] rounded-full items-center justify-center mr-3">
+                    <FontAwesome 
+                      name={event.type === "Meeting" ? "users" : event.type === "Call" ? "phone" : "cutlery"} 
+                      size={20} 
+                      color="#E5E5E5" 
+                    />
+                  </View>
+                  <Text className="text-gray-400 text-sm">{event.date}</Text>
                 </View>
-                <View className="ml-4 flex-1">
-                  <Text className="text-white font-semibold">{event.title}</Text>
-                  <Text className="text-gray-400 mt-1">{event.time} - {event.location}</Text>
-                  <Text className="text-gray-500 text-sm mt-2">{event.date}</Text>
-                </View>
+                <TouchableOpacity>
+                  <FontAwesome name="ellipsis-h" size={18} color="#666" />
+                </TouchableOpacity>
               </View>
-            </TouchableOpacity>
+              
+              <View className="bg-[#1A1A1A] p-4 rounded-xl mb-3">
+                <Text className="text-white text-base font-semibold">{event.title}</Text>
+              </View>
+              
+              <View className="bg-[#3A3A3A] p-4 rounded-xl">
+                <Text className="text-gray-300">{event.time} - {event.location}</Text>
+              </View>
+            </View>
           ))}
         </ScrollView>
 

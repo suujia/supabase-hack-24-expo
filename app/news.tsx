@@ -69,31 +69,22 @@ export default function News() {
           </TouchableOpacity>
         </ScrollView>
 
-        {/* News List */}
-        <ScrollView className="flex-1 px-6">
-          {newsItemsState.map((news) => (
-            <TouchableOpacity
-              key={news.id}
-              className="bg-[#2C2C2C] mb-4 rounded-xl border border-gray-700 overflow-hidden"
-            >
-              <Image
-                source={{ uri: news.image }}
-                className="w-full h-40"
-                resizeMode="cover"
-              />
-              <View className="p-4">
-                <View className="flex-row items-center justify-between">
-                  <Text className="text-gray-400 text-sm">{news.source}</Text>
-                  <Text className="text-gray-500 text-sm">{news.time}</Text>
-                </View>
-                <Text className="text-white font-semibold mt-2">{news.title}</Text>
-                <View className="mt-3 bg-[#3C3C3C] self-start px-3 py-1 rounded-full">
-                  <Text className="text-gray-300 text-sm">{news.category}</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+        <ScrollView>
+        {newsItems.map((item) => (
+          <View key={item.id} style={{ 
+            backgroundColor: '#2C2C2C', 
+            padding: 15, 
+            marginBottom: 10, 
+            borderRadius: 8,
+            marginTop: 4,
+            marginHorizontal: 4
+          }}>
+            <Text style={{ color: 'white', fontSize: 18, marginBottom: 5 }}>{item.title}</Text>
+            <Text style={{ color: '#999' }}>{item.source} - {item.time}</Text>
+            <Text style={{ color: '#666', marginTop: 5 }}>{item.category}</Text>
+          </View>
+        ))}
+      </ScrollView>
 
         {/* Refresh Button */}
         <View className="px-6 pb-8">
