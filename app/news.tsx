@@ -2,6 +2,7 @@ import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { Link } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useState } from 'react';
 
 const newsItems = [
   {
@@ -31,6 +32,8 @@ const newsItems = [
 ];
 
 export default function News() {
+  const [newsItemsState] = useState(newsItems);
+
   return (
     <View className="flex-1 bg-[#1A1A1A]">
       <LinearGradient
@@ -68,7 +71,7 @@ export default function News() {
 
         {/* News List */}
         <ScrollView className="flex-1 px-6">
-          {newsItems.map((news) => (
+          {newsItemsState.map((news) => (
             <TouchableOpacity
               key={news.id}
               className="bg-[#2C2C2C] mb-4 rounded-xl border border-gray-700 overflow-hidden"

@@ -2,30 +2,7 @@ import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-
-const historyItems = [
-  {
-    id: 1,
-    query: `What's the weather today?`,
-    response: 'The weather is sunny with a high of 75°F',
-    time: '2 hours ago',
-    type: 'weather',
-  },
-  {
-    id: 2,
-    query: 'Set a reminder for meeting',
-    response: 'Reminder set for team meeting at 2 PM',
-    time: '5 hours ago',
-    type: 'reminder',
-  },
-  {
-    id: 3,
-    query: 'Play some music',
-    response: 'Playing your favorite playlist',
-    time: 'Yesterday',
-    type: 'music',
-  },
-];
+import { useState } from 'react';
 
 const getIconName = (type: string) => {
   switch (type) {
@@ -41,6 +18,30 @@ const getIconName = (type: string) => {
 };
 
 export default function History() {
+  const [historyItems] = useState([
+    {
+      id: 1,
+      query: `What's the weather today?`,
+      response: 'The weather is sunny with a high of 75°F',
+      time: '2 hours ago',
+      type: 'weather',
+    },
+    {
+      id: 2,
+      query: 'Set a reminder for meeting',
+      response: 'Reminder set for team meeting at 2 PM',
+      time: '5 hours ago',
+      type: 'reminder',
+    },
+    {
+      id: 3,
+      query: 'Play some music',
+      response: 'Playing your favorite playlist',
+      time: 'Yesterday',
+      type: 'music',
+    },
+  ]);
+
   return (
     <View className="flex-1 bg-[#1A1A1A]">
       <LinearGradient

@@ -2,9 +2,10 @@ import { Text, View, TouchableOpacity, ScrollView } from "react-native";
 import { Link } from "expo-router";
 import { FontAwesome } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useState } from 'react';
 
 export default function PremiumEvents() {
-  const events = [
+  const [events] = useState([
     {
       id: 1,
       title: "Strategy Meeting",
@@ -29,7 +30,7 @@ export default function PremiumEvents() {
       location: "Bistro Garden",
       type: "Social"
     }
-  ];
+  ]);
 
   return (
     <View className="flex-1 bg-[#1A1A1A]">
