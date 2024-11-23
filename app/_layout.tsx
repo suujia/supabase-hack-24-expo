@@ -9,11 +9,17 @@ export default function RootLayout() {
       <Stack
         screenOptions={{
           headerShown: true,
-          contentStyle: { backgroundColor: '#FAFAF8' },
+          contentStyle: { backgroundColor: '#1A1A1A' },
           headerStyle: {
-            backgroundColor: '#3B82F6',
+            backgroundColor: '#2C2C2C',
           },
-          headerTintColor: '#fff',
+          headerTintColor: '#E5E5E5',
+          headerShadowVisible: false,
+          headerBackTitle: '',
+          headerTitleStyle: {
+            color: '#E5E5E5',
+            fontSize: 18,
+          },
         }}
       >
         <Stack.Screen 

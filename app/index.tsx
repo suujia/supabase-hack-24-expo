@@ -1,12 +1,25 @@
-import { Text, View, TouchableOpacity, Alert } from "react-native";
+import { Text, View, TouchableOpacity, Alert, ScrollView } from "react-native";
 import { Link } from "expo-router";
 import { FontAwesome } from '@expo/vector-icons';
 import WebView from 'react-native-webview';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Audio } from 'expo-av';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Index() {
+  const [greeting, setGreeting] = useState('');
+  const [userName, setUserName] = useState('Sophie');
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
   useEffect(() => {
+    const getGreeting = () => {
+      const hour = new Date().getHours();
+      if (hour < 12) return 'Good morning';
+      if (hour < 18) return 'Good afternoon';
+      return 'Good evening';
+    };
+    setGreeting(getGreeting());
+
     const requestMicrophonePermission = async () => {
       try {
         const { status } = await Audio.requestPermissionsAsync();
@@ -25,95 +38,82 @@ export default function Index() {
     requestMicrophonePermission();
   }, []);
 
+  const handleSpeakPress = () => {
+    setIsSpeaking(true);
+  };
+
+  const handleStopPress = () => {
+    setIsSpeaking(false);
+  };
+
   return (
-    <View className="flex-1 bg-white">
-      {/* Header */}
-      <View className="pt-16 px-6 pb-6 bg-blue-500">
-        <Text className="text-3xl font-bold text-white">AI Assistant</Text>
-        <Text className="text-blue-100 mt-2">Your personal AI companion</Text>
-      </View>
-
-      <WebView 
-        source={{ uri: 'https://superhack.onrender.com/' }}
-        style={{ flex: 1 }}
-        onError={(syntheticEvent) => {
-          const { nativeEvent } = syntheticEvent;
-          console.warn('WebView error: ', nativeEvent);
-        }}
-        onLoadEnd={() => console.log('WebView loaded')}
-        javaScriptEnabled={true}
-        domStorageEnabled={true}
-        injectedJavaScript={`
-          // Set volume to maximum for all audio and video elements
-          document.querySelectorAll('audio, video').forEach(element => {
-            element.volume = 1.0;
-          });
-          // For any dynamically added audio/video elements
-          const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-              mutation.addedNodes.forEach((node) => {
-                if (node.tagName === 'AUDIO' || node.tagName === 'VIDEO') {
-                  node.volume = 1.0;
-                }
-              });
-            });
-          });
-          observer.observe(document.body, { childList: true, subtree: true });
-          true;
-        `}
-      />
-
-      {/* Main Content */}
-      <View className="flex-1 px-6 py-8">
-        {/* Voice Assistant Button */}
-        {/* <TouchableOpacity 
-          className="items-center justify-center bg-blue-500 rounded-full w-32 h-32 mx-auto mb-8 active:bg-blue-600"
-          onPress={() => {
-            console.log('Voice assistant pressed');
-          }}
-        >
-          <FontAwesome name="microphone" size={48} color="white" />
-        </TouchableOpacity>
-         */}
-        {/* Quick Actions */}
-        <View className="space-y-4">
-          <Link href="/events" asChild>
-            <TouchableOpacity 
-              className="flex-row items-center p-4 bg-gray-50 rounded-xl border border-gray-200 active:bg-gray-100"
-            >
-              <FontAwesome name="calendar" size={24} color="#3B82F6" />
-              <View className="ml-4">
-                <Text className="text-gray-900 text-lg font-semibold">Events</Text>
-                <Text className="text-gray-600">Find and book events near you</Text>
-              </View>
-            </TouchableOpacity>
-          </Link>
-
-          <Link href="/news" asChild>
-            <TouchableOpacity 
-              className="flex-row items-center p-4 bg-gray-50 rounded-xl border border-gray-200 active:bg-gray-100"
-            >
-              <FontAwesome name="newspaper-o" size={24} color="#3B82F6" />
-              <View className="ml-4">
-                <Text className="text-gray-900 text-lg font-semibold">News Feed</Text>
-                <Text className="text-gray-600">Stay updated with latest news</Text>
-              </View>
-            </TouchableOpacity>
-          </Link>
-
-          <Link href="/history" asChild>
-            <TouchableOpacity 
-              className="flex-row items-center p-4 bg-gray-50 rounded-xl border border-gray-200 active:bg-gray-100"
-            >
-              <FontAwesome name="history" size={24} color="#3B82F6" />
-              <View className="ml-4">
-                <Text className="text-gray-900 text-lg font-semibold">History</Text>
-                <Text className="text-gray-600">View your past interactions</Text>
-              </View>
-            </TouchableOpacity>
-          </Link>
+    <View className="flex-1 bg-[#1A1A1A]">
+      <LinearGradient
+        colors={['#2C2C2C', '#1A1A1A']}
+        className="flex-1"
+      >
+        {/* Header */}
+        <View className="pt-24 px-6 pb-6">
+          <Text className="text-4xl font-bold text-white">{greeting}, {userName}</Text>
+          <Text className="text-gray-400 mt-2 text-lg">How may I assist you today?</Text>
         </View>
-      </View>
+
+        {/* Quick Actions */}
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} className="px-6 py-4">
+          <Link href="/events" asChild>
+            <TouchableOpacity className="bg-[#2C2C2C] mr-4 p-4 rounded-xl border border-gray-700">
+              <FontAwesome name="calendar" size={24} color="#E5E5E5" />
+              <Text className="text-white mt-2">Events</Text>
+            </TouchableOpacity>
+          </Link>
+          <Link href="/history" asChild>
+            <TouchableOpacity className="bg-[#2C2C2C] mr-4 p-4 rounded-xl border border-gray-700">
+              <FontAwesome name="history" size={24} color="#E5E5E5" />
+              <Text className="text-white mt-2">History</Text>
+            </TouchableOpacity>
+          </Link>
+          <Link href="/news" asChild>
+            <TouchableOpacity className="bg-[#2C2C2C] mr-4 p-4 rounded-xl border border-gray-700">
+              <FontAwesome name="newspaper-o" size={24} color="#E5E5E5" />
+              <Text className="text-white mt-2">News</Text>
+            </TouchableOpacity>
+          </Link>
+        </ScrollView>
+        
+
+        {/* Hidden WebView when speaking */}
+        {isSpeaking && (
+          <View style={{ width: 1, height: 1, overflow: 'hidden', position: 'absolute' }}>
+            <WebView 
+              source={{ uri: 'https://superhack.onrender.com/' }}
+              style={{ width: 1, height: 1 }}
+              onError={(syntheticEvent) => {
+                const { nativeEvent } = syntheticEvent;
+                console.warn('WebView error: ', nativeEvent);
+              }}
+              onLoadEnd={() => console.log('WebView loaded')}
+              javaScriptEnabled={true}
+              domStorageEnabled={true}
+            />
+          </View>
+        )}
+
+        <View className="flex-1" />
+
+        {/* Input Area */}
+        <View className="px-6 pb-8 mt-4">
+          <TouchableOpacity 
+            className={`${isSpeaking ? 'bg-[#FF4444]' : 'bg-[#4A4A4A]'} p-4 rounded-full flex-row items-center justify-center`}
+            activeOpacity={0.7}
+            onPress={isSpeaking ? handleStopPress : handleSpeakPress}
+          >
+            <FontAwesome name={isSpeaking ? "stop" : "microphone"} size={24} color="#E5E5E5" />
+            <Text className="text-white ml-2 text-lg">
+              {isSpeaking ? 'Listening... (Tap to stop)' : 'Tap to speak'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </LinearGradient>
     </View>
   );
 }

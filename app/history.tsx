@@ -1,6 +1,7 @@
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const historyItems = [
   {
@@ -41,46 +42,72 @@ const getIconName = (type: string) => {
 
 export default function History() {
   return (
-    <View className="flex-1 bg-slate-900">
-      <View className="pt-16 px-6 pb-6 bg-slate-800">
-        <View className="flex-row items-center justify-between">
-          <Text className="text-3xl font-bold text-white">History</Text>
+    <View className="flex-1 bg-[#1A1A1A]">
+      <LinearGradient
+        colors={['#2C2C2C', '#1A1A1A']}
+        className="flex-1"
+      >
+        {/* Header */}
+        <View className="pt-24 px-6 pb-6 flex-row justify-between items-center">
+          <View>
+            <Text className="text-4xl font-bold text-white">History</Text>
+            <Text className="text-gray-400 mt-2 text-lg">Your past interactions</Text>
+          </View>
           <Link href="/" asChild>
-            <TouchableOpacity className="p-2">
-              <FontAwesome name="close" size={24} color="white" />
+            <TouchableOpacity>
+              <FontAwesome name="close" size={24} color="#E5E5E5" />
             </TouchableOpacity>
           </Link>
         </View>
-        <Text className="text-slate-400 mt-2">Your past interactions</Text>
-      </View>
 
-      <ScrollView className="flex-1">
-        <View className="px-6 py-8 space-y-4">
+        {/* Filter Options */}
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} className="px-6 py-4">
+          <TouchableOpacity className="bg-[#4A4A4A] mr-4 px-6 py-2 rounded-full">
+            <Text className="text-white">All</Text>
+          </TouchableOpacity>
+          <TouchableOpacity className="bg-[#2C2C2C] mr-4 px-6 py-2 rounded-full border border-gray-700">
+            <Text className="text-gray-400">Schedule</Text>
+          </TouchableOpacity>
+          <TouchableOpacity className="bg-[#2C2C2C] mr-4 px-6 py-2 rounded-full border border-gray-700">
+            <Text className="text-gray-400">Reminders</Text>
+          </TouchableOpacity>
+          <TouchableOpacity className="bg-[#2C2C2C] mr-4 px-6 py-2 rounded-full border border-gray-700">
+            <Text className="text-gray-400">Searches</Text>
+          </TouchableOpacity>
+        </ScrollView>
+
+        {/* History List */}
+        <ScrollView className="flex-1 px-6">
           {historyItems.map((item) => (
-            <View
+            <TouchableOpacity
               key={item.id}
-              className="bg-slate-800 rounded-xl p-4"
+              className="bg-[#2C2C2C] mb-4 p-4 rounded-xl border border-gray-700"
             >
-              <View className="flex-row items-center justify-between">
-                <View className="flex-row items-center">
-                  <View className="w-10 h-10 bg-blue-600 rounded-full items-center justify-center">
-                    <FontAwesome name={getIconName(item.type)} size={20} color="white" />
-                  </View>
-                  <Text className="text-slate-400 ml-3">{item.time}</Text>
+              <View className="flex-row items-center">
+                <View className="bg-[#3C3C3C] p-3 rounded-lg">
+                  <FontAwesome name={getIconName(item.type)} size={20} color="#E5E5E5" />
                 </View>
-                <TouchableOpacity className="p-2">
-                  <FontAwesome name="ellipsis-h" size={16} color="#60A5FA" />
-                </TouchableOpacity>
+                <View className="ml-4 flex-1">
+                  <Text className="text-white font-semibold">{item.query}</Text>
+                  <Text className="text-gray-400 mt-1">{item.response}</Text>
+                  <Text className="text-gray-500 text-sm mt-2">{item.time}</Text>
+                </View>
               </View>
-              
-              <View className="mt-3">
-                <Text className="text-white font-semibold">{item.query}</Text>
-                <Text className="text-slate-400 mt-1">{item.response}</Text>
-              </View>
-            </View>
+            </TouchableOpacity>
           ))}
+        </ScrollView>
+
+        {/* Clear History Button */}
+        <View className="px-6 pb-8">
+          <TouchableOpacity 
+            className="bg-[#4A4A4A] p-4 rounded-full flex-row items-center justify-center"
+            activeOpacity={0.7}
+          >
+            <FontAwesome name="trash" size={24} color="#E5E5E5" />
+            <Text className="text-white ml-2 text-lg">Clear History</Text>
+          </TouchableOpacity>
         </View>
-      </ScrollView>
+      </LinearGradient>
     </View>
   );
 }

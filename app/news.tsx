@@ -1,6 +1,7 @@
 import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { Link } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const newsItems = [
   {
@@ -31,47 +32,77 @@ const newsItems = [
 
 export default function News() {
   return (
-    <View className="flex-1 bg-slate-900">
-      <View className="pt-16 px-6 pb-6 bg-slate-800">
-        <View className="flex-row items-center justify-between">
-          <Text className="text-3xl font-bold text-white">News Feed</Text>
+    <View className="flex-1 bg-[#1A1A1A]">
+      <LinearGradient
+        colors={['#2C2C2C', '#1A1A1A']}
+        className="flex-1"
+      >
+        {/* Header */}
+        <View className="pt-24 px-6 pb-6 flex-row justify-between items-center">
+          <View>
+            <Text className="text-4xl font-bold text-white">News Feed</Text>
+            <Text className="text-gray-400 mt-2 text-lg">Stay informed</Text>
+          </View>
           <Link href="/" asChild>
-            <TouchableOpacity className="p-2">
-              <FontAwesome name="close" size={24} color="white" />
+            <TouchableOpacity>
+              <FontAwesome name="close" size={24} color="#E5E5E5" />
             </TouchableOpacity>
           </Link>
         </View>
-        <Text className="text-slate-400 mt-2">Latest updates and stories</Text>
-      </View>
 
-      <ScrollView className="flex-1">
-        <View className="px-6 py-8 space-y-6">
-          {newsItems.map((item) => (
+        {/* Categories */}
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} className="px-6 py-4">
+          <TouchableOpacity className="bg-[#4A4A4A] mr-4 px-6 py-2 rounded-full">
+            <Text className="text-white">All</Text>
+          </TouchableOpacity>
+          <TouchableOpacity className="bg-[#2C2C2C] mr-4 px-6 py-2 rounded-full border border-gray-700">
+            <Text className="text-gray-400">Technology</Text>
+          </TouchableOpacity>
+          <TouchableOpacity className="bg-[#2C2C2C] mr-4 px-6 py-2 rounded-full border border-gray-700">
+            <Text className="text-gray-400">Finance</Text>
+          </TouchableOpacity>
+          <TouchableOpacity className="bg-[#2C2C2C] mr-4 px-6 py-2 rounded-full border border-gray-700">
+            <Text className="text-gray-400">Environment</Text>
+          </TouchableOpacity>
+        </ScrollView>
+
+        {/* News List */}
+        <ScrollView className="flex-1 px-6">
+          {newsItems.map((news) => (
             <TouchableOpacity
-              key={item.id}
-              className="bg-slate-800 rounded-xl overflow-hidden"
+              key={news.id}
+              className="bg-[#2C2C2C] mb-4 rounded-xl border border-gray-700 overflow-hidden"
             >
               <Image
-                source={{ uri: item.image }}
-                className="w-full h-48"
+                source={{ uri: news.image }}
+                className="w-full h-40"
                 resizeMode="cover"
               />
               <View className="p-4">
-                <View className="flex-row items-center">
-                  <Text className="text-blue-400 font-semibold">{item.category}</Text>
-                  <Text className="text-slate-400 mx-2">•</Text>
-                  <Text className="text-slate-400">{item.time}</Text>
+                <View className="flex-row items-center justify-between">
+                  <Text className="text-gray-400 text-sm">{news.source}</Text>
+                  <Text className="text-gray-500 text-sm">{news.time}</Text>
                 </View>
-                <Text className="text-xl font-bold text-white mt-2">{item.title}</Text>
-                <View className="flex-row items-center mt-3">
-                  <FontAwesome name="newspaper-o" size={16} color="#60A5FA" />
-                  <Text className="text-slate-400 ml-2">{item.source}</Text>
+                <Text className="text-white font-semibold mt-2">{news.title}</Text>
+                <View className="mt-3 bg-[#3C3C3C] self-start px-3 py-1 rounded-full">
+                  <Text className="text-gray-300 text-sm">{news.category}</Text>
                 </View>
               </View>
             </TouchableOpacity>
           ))}
+        </ScrollView>
+
+        {/* Refresh Button */}
+        <View className="px-6 pb-8">
+          <TouchableOpacity 
+            className="bg-[#4A4A4A] p-4 rounded-full flex-row items-center justify-center"
+            activeOpacity={0.7}
+          >
+            <FontAwesome name="refresh" size={24} color="#E5E5E5" />
+            <Text className="text-white ml-2 text-lg">Refresh Feed</Text>
+          </TouchableOpacity>
         </View>
-      </ScrollView>
+      </LinearGradient>
     </View>
   );
 }
