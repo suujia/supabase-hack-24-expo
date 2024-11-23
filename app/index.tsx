@@ -34,8 +34,15 @@ export default function Index() {
       </View>
 
       <WebView 
-        source={{ uri: 'https://www.google.com' }}
+        source={{ uri: 'https://superhack.onrender.com' }}
         style={{ flex: 1 }}
+        onError={(syntheticEvent) => {
+          const { nativeEvent } = syntheticEvent;
+          console.warn('WebView error: ', nativeEvent);
+        }}
+        onLoadEnd={() => console.log('WebView loaded')}
+        javaScriptEnabled={true}
+        domStorageEnabled={true}
       />
 
       {/* Main Content */}
